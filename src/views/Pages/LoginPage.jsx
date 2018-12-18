@@ -9,22 +9,28 @@ import Card from 'components/Card/Card.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 import Checkbox from 'elements/CustomCheckbox/CustomCheckbox.jsx';
 
-class LoginPage extends Component{
-    constructor(props){
+class LoginPage extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            cardHidden: true
+            cardHidden: true,
+            loginEmail: "",
+            loginPassword: ""
         }
     }
-    componentDidMount(){
-        setTimeout(function() { this.setState({cardHidden: false}); }.bind(this), 700);
+    componentDidMount() {
+        setTimeout(function () { this.setState({ cardHidden: false }); }.bind(this), 700);
     }
-    render(){
+
+    handleSubmit = (event) => {
+        alert ('hit')
+    }
+    render() {
         return (
             <Grid>
                 <Row>
                     <Col md={4} sm={6} mdOffset={4} smOffset={3}>
-                        <form>
+                        <form >
                             <Card
                                 hidden={this.state.cardHidden}
                                 textCenter
@@ -52,13 +58,13 @@ class LoginPage extends Component{
                                         <FormGroup>
                                             <Checkbox
                                                 number="1"
-                                                label="Subscribe to newsletter"
+                                                label="Remember me"
                                             />
                                         </FormGroup>
                                     </div>
                                 }
                                 legend={
-                                    <Button bsStyle="info" fill wd>
+                                    <Button bsStyle="info" fill wd onClick={this.handleSubmit}>
                                         Login
                                     </Button>
                                 }
