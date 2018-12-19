@@ -33,14 +33,14 @@ var pages = [{ path: "/pages/user-page", name: "User Page", mini: "UP", componen
 
 var dashRoutes = [
     {
-        collapse: true, path: "/quanlyaccount", name: "QuanLyAccount", state: "openQuanLyAccount", icon: "pe-7s-leaf", views: [
-            { path: "/quanlyaccount/admin", name: "Admin", mini: "A", component: Admin },
-            { path: "/quanlyaccount/moderator", name: "Moderator", mini: "M", component: Moderator },
-            { path: "/quanlyaccount/user", name: "User", mini: "U", component: User }]
+        collapse: true, path: "/users", name: "User", state: "openUsers", icon: "pe-7s-leaf", views: [
+            { path: "/users/admin", name: "Admin", mini: "A", component: Admin },
+            { path: "/users/moderator", name: "Moderator", mini: "M", component: Moderator },
+            { path: "/users/user", name: "Normal user", mini: "U", component: User }]
     },
     { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
-    { path: "/manage-products", name: "Products", icon: "pe-7s-graph", component: Product },
-    { path: "/productadd", name: "ProductAdd", icon: "pe-7s-graph", component: ProductAdd },
+    { path: "/manage-products", name: "Product", icon: "pe-7s-graph", component: Product },
+    { path: "/productadd", name: "New product", icon: "pe-7s-graph", component: ProductAdd },
     { path: "/productdetail/:id", name: "ProductDetail", icon: "pe-7s-graph", component: ProductDetail },
     {
         collapse: true, path: "/components", name: "Components", state: "openComponents", icon: "pe-7s-plugin", views: [
