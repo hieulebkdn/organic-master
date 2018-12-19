@@ -9,13 +9,6 @@ import Card from 'components/Card/Card.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 import Checkbox from 'elements/CustomCheckbox/CustomCheckbox.jsx';
 import callApi from '../../utils/apiCaller';
-import {
-	BrowserRouter,
-	Route,
-	Link,
-	Redirect
-} from 'react-router-dom'
-
 
 class LoginPage extends Component {
 	constructor(props) {
