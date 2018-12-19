@@ -29,7 +29,8 @@ class Sidebar extends Component{
             openMaps: (this.activeRoute("/maps") !== '' ? true:false),
             openPages: (this.activeRoute("/pages") !== '' ? true:false),
             isWindows: (navigator.platform.indexOf('Win') > -1 ? true : false),
-            width: window.innerWidth
+            width: window.innerWidth,
+            user_name: localStorage.getItem('current_user_email'),
         }
     }
     // verifies if routeName is the one active (in browser input)
@@ -74,7 +75,7 @@ class Sidebar extends Component{
                         </div>
                 	</a>
                 	<a href="http://www.creative-tim.com" className="simple-text logo-normal">
-                		Creative Tim
+                		Organic Shop
                 	</a>
                 </div>
                 <div className="sidebar-wrapper" ref="sidebarWrapper">
@@ -85,7 +86,7 @@ class Sidebar extends Component{
                         <div className="info">
                             <a onClick={ ()=> this.setState({ openAvatar: !this.state.openAvatar })}>
                                 <span>
-                                    Tania Andrew
+                                    {this.state.user_name}
                                     <b className={this.state.openAvatar ? "caret rotate-180":"caret"}></b>
                                 </span>
                             </a>

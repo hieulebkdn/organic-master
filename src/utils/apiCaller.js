@@ -6,7 +6,5 @@ export default function callApi(endpoint, method, body) {
     method: method,
     url: `${API_URL}/${endpoint}`,
     data: body,
-  }).catch(err => {
-    console.log(err);
   })
 };
