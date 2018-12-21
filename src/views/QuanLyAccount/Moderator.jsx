@@ -3,10 +3,8 @@ import {
   Grid, Row, Col,
   Table,
   OverlayTrigger,
-  Tooltip, Modal, FormGroup, FormControl, Media, Checkbox, ControlLabel
+  Tooltip, Modal, FormGroup, FormControl, ControlLabel
 } from 'react-bootstrap';
-// react component that creates a switch button that changes from on to off mode
-import Switch from 'react-bootstrap-switch';
 
 import Card from 'components/Card/Card.jsx';
 
@@ -14,7 +12,6 @@ import Button from 'elements/CustomButton/CustomButton.jsx';
 
 import callApi from '../../utils/apiCaller';
 
-import axios from 'axios'
 
 class Moderator extends Component {
   constructor(props) {
