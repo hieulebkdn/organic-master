@@ -3,7 +3,7 @@ import {
   Grid, Row, Col,
   Table,
   OverlayTrigger,
-  Tooltip
+  Tooltip, Modal, FormGroup, FormControl, Media, Checkbox, ControlLabel
 } from 'react-bootstrap';
 // react component that creates a switch button that changes from on to off mode
 import Switch from 'react-bootstrap-switch';
@@ -13,6 +13,8 @@ import Card from 'components/Card/Card.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 
 import callApi from '../../utils/apiCaller';
+
+import axios from 'axios'
 
 class Moderator extends Component {
   constructor(props) {
@@ -31,8 +33,58 @@ class Moderator extends Component {
           "name": ""
         }
       }],
-      currentID: null
+      userFormData: {
+        "id": null,
+        "email": "",
+        "phone": "",
+        "created_at": "",
+        "account": {
+          "name": "",
+          "city": "",
+          "address": "",
+          "gender": "",
+          "dob": "",
+        }
+      }
     };
+  }
+
+  handleShow = (id) => {
+    axios.get('http://localhost:3001/v1/users/' + id).then(res => {
+      console.log(res.data)
+      this.setState({
+        userFormData: {
+          "id": res.data.id,
+          "email": res.data.email,
+          "phone": res.data.phone,
+          "created_at": res.data.created_at,
+          "account": {
+            "name": res.data.account.name,
+            "city": res.data.account.city,
+            "address": res.data.account.address,
+            "gender": res.data.account.gender,
+            "dob": res.data.account.dob,
+          }
+        }
+      })
+      console.log(this.state.userFormData);
+    }).catch(function (err) {
+      console.log(err)
+    });
+    this.setState({ showAddModal: true });
+  }
+
+  handleClose = () => {
+    this.setState({ showAddModal: false });
+  }
+  onDelete = (id) => {
+    axios.delete('http://localhost:3001/v1/users/' + id).then(res => {
+      axios.get('http://localhost:3001/v1/moderators').then(res => {
+        this.setState({ moderators: res.data });
+      })
+    }).catch(function (err) {
+      console.log(err)
+    });
   }
 
   componentDidMount() {
@@ -76,19 +128,19 @@ class Moderator extends Component {
                     <tbody>
                       {this.state.moderators.map((item, index) =>
                         <tr key={index}>
-                          <td className="text-center">{index+1}</td>
+                          <td className="text-center">{index + 1}</td>
                           <td className="text-center">{item.account.name}</td>
                           <td className="text-center">{item.email}</td>
                           <td className="text-center">{item.phone}</td>
                           <td className="text-center">{item.shop.name}</td>
                           <td className="td-actions text-right">
                             <OverlayTrigger placement="top" overlay={view}>
-                              <Button simple bsStyle="info" bsSize="xs">
+                              <Button simple bsStyle="info" bsSize="xs" onClick={() => this.handleShow(item.id)}>>
                                 <i className="fa fa-user"></i>
                               </Button>
                             </OverlayTrigger>
                             <OverlayTrigger placement="top" overlay={remove}>
-                              <Button simple bsStyle="danger" bsSize="xs">
+                              <Button simple bsStyle="danger" bsSize="xs" onClick={() => this.onDelete(item.id)}>
                                 <i className="fa fa-times"></i>
                               </Button>
                             </OverlayTrigger>
@@ -102,6 +154,75 @@ class Moderator extends Component {
             </Col>
           </Row>
         </Grid>
+
+        <Modal show={this.state.showAddModal} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Thông tin tài khoản</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Card
+              title={this.state.userFormData.name}
+              content={
+                <form>
+                  <FormGroup>
+                    <ControlLabel>
+                      Email
+                            </ControlLabel>
+                    <FormControl
+                      value={this.state.userFormData.email}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <ControlLabel>
+                      Số điện thoại
+                            </ControlLabel>
+                    <FormControl
+                      value={this.state.userFormData.phone}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <ControlLabel>
+                      Thành phố
+                            </ControlLabel>
+                    <FormControl
+                      value={this.state.userFormData.account.city}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <ControlLabel>
+                      Địa chỉ
+                            </ControlLabel>
+                    <FormControl
+                      value={this.state.userFormData.account.address}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <ControlLabel>
+                      Ngày sinh
+                            </ControlLabel>
+                    <FormControl
+                      value={this.state.userFormData.account.dob}
+                    />
+                  </FormGroup>
+
+                  <FormGroup>
+                    <ControlLabel>
+                      Ngày tham gia
+                            </ControlLabel>
+                    <FormControl
+                      value={this.state.userFormData.created_at}
+                    />
+                  </FormGroup>
+
+                </form>
+              }
+            />
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
