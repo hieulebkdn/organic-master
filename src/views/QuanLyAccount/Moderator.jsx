@@ -50,7 +50,7 @@ class Moderator extends Component {
   }
 
   handleShow = (id) => {
-    axios.get('http://localhost:3001/v1/users/' + id).then(res => {
+    callApi('users/' + id, 'GET', null).then(res => {
       console.log(res.data)
       this.setState({
         userFormData: {
@@ -68,9 +68,7 @@ class Moderator extends Component {
         }
       })
       console.log(this.state.userFormData);
-    }).catch(function (err) {
-      console.log(err)
-    });
+    })
     this.setState({ showAddModal: true });
   }
 
@@ -78,13 +76,11 @@ class Moderator extends Component {
     this.setState({ showAddModal: false });
   }
   onDelete = (id) => {
-    axios.delete('http://localhost:3001/v1/users/' + id).then(res => {
-      axios.get('http://localhost:3001/v1/moderators').then(res => {
+    callApi('users/' + id, 'DELETE', null).then(res => {
+      callApi('moderators', 'GET', null).then(response => {
         this.setState({ moderators: res.data });
       })
-    }).catch(function (err) {
-      console.log(err)
-    });
+    })
   }
 
   componentDidMount() {

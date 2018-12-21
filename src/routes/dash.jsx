@@ -23,7 +23,6 @@ import Product from '../views/QuanLyProduct/Product'
 import ProductDetail from 'views/QuanLyProduct/ProductDetail.jsx';
 import ProductAdd from 'views/QuanLyProduct/ProductAdd.jsx';
 
-import Admin from 'views/QuanLyAccount/Admin.jsx';
 import Moderator from 'views/QuanLyAccount/Moderator.jsx';
 import User from 'views/QuanLyAccount/User.jsx';
 
@@ -32,16 +31,15 @@ import pagesRoutes from './pages.jsx';
 var pages = [{ path: "/pages/user-page", name: "User Page", mini: "UP", component: UserPage }].concat(pagesRoutes);
 
 var dashRoutes = [
+    { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
     {
-        collapse: true, path: "/users", name: "User", state: "openUsers", icon: "pe-7s-leaf", views: [
-            { path: "/users/admin", name: "Admin", mini: "A", component: Admin },
+        collapse: true, path: "/users", name: "User", state: "openUsers", icon: "pe-7s-user", views: [
             { path: "/users/moderator", name: "Moderator", mini: "M", component: Moderator },
             { path: "/users/user", name: "Normal user", mini: "U", component: User }]
     },
-    { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
     { path: "/add-product",hide:true, name: "New product", icon: "pe-7s-graph", component: ProductAdd },
     { path: "/product-detail/:id",hide:true, name: "ProductDetail", icon: "pe-7s-graph", component: ProductDetail },
-    { path: "/manage-products", name: "Product", icon: "pe-7s-graph", component: Product },
+    { path: "/manage-products", name: "Product", icon: "pe-7s-leaf", component: Product },
     {
         collapse: true, path: "/components", name: "Components", state: "openComponents", icon: "pe-7s-plugin", views: [
             { path: "/components/buttons", name: "Buttons", mini: "B", component: Buttons },

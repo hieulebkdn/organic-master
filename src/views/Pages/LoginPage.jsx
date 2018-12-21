@@ -8,12 +8,14 @@ import Card from 'components/Card/Card.jsx';
 
 import Button from 'elements/CustomButton/CustomButton.jsx';
 import Checkbox from 'elements/CustomCheckbox/CustomCheckbox.jsx';
-import callApi from '../../utils/apiCaller';
+import callApiAuth from '../../utils/apiAuth';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			alert: null,
 			cardHidden: true,
 			authState: false,
 			controls: {
@@ -35,15 +37,15 @@ class LoginPage extends Component {
 			"email": this.state.controls.email.value,
 			"password": this.state.controls.password.value
 		}
-		callApi('authenticate/', 'POST', authData).then(response => {
+		callApiAuth('authenticate/', 'POST', authData).then(response => {
 			localStorage.setItem('auth_token', response.data.auth_token);
 			localStorage.setItem('current_user_id', response.data.user_id);
 			localStorage.setItem('current_user_email', response.data.user_email);
 			this.setState({ authState: true });
-			this.props.history.push('/#/dashboard')
+			this.props.history.push('/dashboard')
 		}).catch(err => {
 			this.setState({ authState: false })
-			alert("err")
+			this.basicAlert()
 		})
 	}
 
@@ -58,9 +60,30 @@ class LoginPage extends Component {
 		this.setState({ controls: updatedControls });
 	}
 
+	basicAlert() {
+		this.setState({
+			alert: (
+				<SweetAlert
+					style={{ display: "block", marginTop: "-100px" }}
+					title="Incorrect email or password!"
+					onConfirm={() => this.hideAlert()}
+					onCancel={() => this.hideAlert()}
+					confirmBtnBsStyle="info"
+				/>
+			)
+		});
+	}
+
+	hideAlert() {
+		this.setState({
+			alert: null
+		});
+	}
+
 	render() {
 		return (
 			<Grid>
+				{this.state.alert}
 				<Row>
 					<Col md={4} sm={6} mdOffset={4} smOffset={3}>
 						<form >
