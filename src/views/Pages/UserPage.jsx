@@ -9,7 +9,7 @@ import FormInputs from 'components/FormInputs/FormInputs.jsx';
 import UserCard from 'components/Card/UserCard.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 
-import avatar from "assets/img/default-avatar.png";
+import avatar from "assets/img/default-avatar.jpg";
 
 class UserPage extends Component {
     render() {

@@ -21,18 +21,20 @@ class ProductDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
+            categories:[],
             isLoading:true,
             id:0,
             name:'',
             price:'',
             unit:'',
-            category:'',
             stock:'',
+            rating:0,
+            buy:0,
+            category:'',
             sku:'',
             //custome state
             editOpen:false,
             //
-            singleSelect: null,
             // Type
             // type_text: "",
             // type_textError: null,
@@ -53,6 +55,14 @@ class ProductDetail extends Component{
             // radioVariant: "1"
         };
     }
+    createRate(){
+        let rate = [];
+        // Outer loop to create parent
+        for (let i = 1; i <=this.state.rating; i++) {
+            rate.push(<i style={{color:'yellow'}} className="fa fa-star"/>);
+        }
+        return rate;
+    }
     onChange = (event) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -61,28 +71,42 @@ class ProductDetail extends Component{
     }
     onEdit = (event) => {
         event.preventDefault();
-        axios.put('http://api-organic.herokuapp.com/v1/products/'+this.state.id,{
-            "name":this.state.name,
-            "price":this.state.price,
-            "unit":this.state.unit,
-            "stock":this.state.stock,
-            "sku":this.state.sku,
+        axios.put('https://organicshoptl.herokuapp.com/api/products/'+this.state.id,{
+                name:this.state.name,
+                price:this.state.price,
+                unit:this.state.unit,
+                stock:this.state.stock,
+                rating:this.state.rating,
+                buy:this.state.buy,
+                tbl_category_id: this.state.category,
+                sku: this.state.sku
         }).then(res =>{
             this.props.history.push('/product');
         });
     }
-    componentDidMount(){
-        axios.get('http://api-organic.herokuapp.com/v1/products/'+this.props.match.params.id).then(res =>{
+    async getData(){
+        await axios.get('https://organicshoptl.herokuapp.com/api/products/'+this.props.match.params.id).then(res =>{
             this.setState({
                 id:res.data.id,
                 name:res.data.name,
                 price:res.data.price,
                 unit:res.data.unit,
                 stock:res.data.stock,
-                sku:res.data.sku,
-                isLoading:false,
+                rating:res.data.rating,
+                buy:res.data.buy,
+                category: res.data.tbl_category_id,
+                sku: res.data.sku
             });
         });
+        await axios.get('https://api-organic.herokuapp.com/v1/categories').then(res=>{
+            this.setState({
+                categories:res.data.map((cat) => {return {value: cat.id,label: cat.name}}),
+                isLoading:false
+            })
+        }); 
+    }
+    componentDidMount(){
+        this.getData();
     }
    changeEditOpen(){
       this.setState({
@@ -185,12 +209,11 @@ class ProductDetail extends Component{
                                                 </ControlLabel>
                                                 <Col md={8}>
                                                     <Select
-                                                    disabled={!this.state.editOpen}
-                                                        placeholder="Single Select"
+                                                        placeholder="Category"
                                                         name="singleSelect"
-                                                        value={this.state.singleSelect}
-                                                        options={selectOptions}
-                                                        onChange={(value) => this.setState({ singleSelect: value})}
+                                                        value={this.state.category}
+                                                        options={this.state.categories}
+                                                        onChange={(cat) => this.setState({ category: cat.value})}
                                                     />
                                                 </Col>
                                             </FormGroup>
@@ -214,6 +237,32 @@ class ProductDetail extends Component{
                                                         }}
                                                     />
                                                     {this.state.type_stockError}
+                                                </Col>
+                                            </FormGroup>
+                                        </fieldset>
+
+                                       <fieldset>
+                                            <FormGroup controlId="formHorizontalNumber">
+                                                <ControlLabel className="col-sm-2">
+                                                    Rating
+                                                </ControlLabel>
+                                                <Col md={8}>
+                                                    {this.createRate()}
+                                                </Col>
+                                            </FormGroup>
+                                        </fieldset>
+
+                                        <fieldset>
+                                            <FormGroup controlId="formHorizontalNumber">
+                                                <ControlLabel className="col-sm-2">
+                                                    Buy
+                                                </ControlLabel>
+                                                <Col md={8}>
+                                                    <FormControl
+                                                        defaultValue={this.state.buy}
+                                                        disabled
+                                                        type="number"
+                                                    />
                                                 </Col>
                                             </FormGroup>
                                         </fieldset>

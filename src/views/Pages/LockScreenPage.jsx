@@ -5,7 +5,7 @@ import {
 
 import Button from 'elements/CustomButton/CustomButton.jsx';
 
-import avatar from 'assets/img/default-avatar.png';
+import avatar from 'assets/img/default-avatar.jpg';
 
 class LockScreenPage extends Component{
     render(){

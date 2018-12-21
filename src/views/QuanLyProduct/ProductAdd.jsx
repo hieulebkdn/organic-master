@@ -4,9 +4,10 @@ import{
     Grid, Row, Col,
     FormGroup, ControlLabel, FormControl, HelpBlock, Form, InputGroup
 } from 'react-bootstrap';
-// import ReactLoading from 'react-loading';
+import ReactLoading from 'react-loading';
 import Card from 'components/Card/Card.jsx';
-import ImageUpload from '../../components/CustomUpload/ImageUpload'
+import ImageUpload from 'components/CustomUpload/ImageUpload.jsx';
+
 import Checkbox from 'elements/CustomCheckbox/CustomCheckbox.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 import Radio from 'elements/CustomRadio/CustomRadio.jsx';
@@ -20,11 +21,13 @@ class ProductAdd extends Component{
     constructor(props){
         super(props);
         this.state = {
+            categories:[],
+            isLoading:true,
             //custome state
             name:'',
             price:'',
             unit:'',
-            category:'',
+            category:null,
             stock:'',
             sku:'',
           
@@ -58,28 +61,34 @@ class ProductAdd extends Component{
     }
     onAdd = (event)=> {
         event.preventDefault();
-        axios.post('http://api-organic.herokuapp.com/v1/products',{
+        axios.post('https://organicshoptl.herokuapp.com/api/products',{
             name:this.state.name,
             price:this.state.price,
             unit:this.state.unit,
             stock:this.state.stock,
             rating:0,
             buy:0,
+            "tbl_category_id": this.state.category,
+            "sku": this.state.sku
         }).then(res =>{
             this.props.history.push('/product');
         });
     }
-    componentDidMount(){
-    }
-    handleRadio = event => {
-        const target = event.target;
+    async getCat(){
+        await axios.get('https://api-organic.herokuapp.com/v1/categories').then(res=>{
         this.setState({
-            [target.name]: target.value
-        });
-    };
+                categories: res.data.map( (cat) => {return {value: cat.id,label: cat.name}}),
+                isLoading:false
+            })
+        })   
+    }
+    componentDidMount(){
+        this.getCat();
+    }
     render(){
         return (
             <div className="main-content">
+            {this.state.isLoading?(<ReactLoading style={{width:'100px',margin:'auto'}} type={"spinningBubbles"} color={"#ADFF2F"} height={'10'} width={'10'} />):(
                 <Grid fluid>
                     <Row>
                         <Col md={12}>
@@ -152,12 +161,11 @@ class ProductAdd extends Component{
                                                 </ControlLabel>
                                                 <Col md={8}>
                                                     <Select
-                                                   
-                                                        placeholder="Single Select"
+                                                        placeholder="Category"
                                                         name="singleSelect"
-                                                        value={this.state.singleSelect}
-                                                        options={selectOptions}
-                                                        onChange={(value) => this.setState({ singleSelect: value})}
+                                                        value={this.state.category}
+                                                        options={this.state.categories}
+                                                        onChange={(cat) => this.setState({ category: cat.value})}
                                                     />
                                                 </Col>
                                             </FormGroup>
@@ -220,7 +228,7 @@ class ProductAdd extends Component{
                             />
                         </Col>
                     </Row>
-                </Grid>
+                </Grid>)}
             </div>
         );
     }

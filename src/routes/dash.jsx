@@ -39,9 +39,9 @@ var dashRoutes = [
             { path: "/users/user", name: "Normal user", mini: "U", component: User }]
     },
     { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
+    { path: "/add-product",hide:true, name: "New product", icon: "pe-7s-graph", component: ProductAdd },
+    { path: "/product-detail/:id",hide:true, name: "ProductDetail", icon: "pe-7s-graph", component: ProductDetail },
     { path: "/manage-products", name: "Product", icon: "pe-7s-graph", component: Product },
-    { path: "/productadd", name: "New product", icon: "pe-7s-graph", component: ProductAdd },
-    { path: "/productdetail/:id", name: "ProductDetail", icon: "pe-7s-graph", component: ProductDetail },
     {
         collapse: true, path: "/components", name: "Components", state: "openComponents", icon: "pe-7s-plugin", views: [
             { path: "/components/buttons", name: "Buttons", mini: "B", component: Buttons },
@@ -77,6 +77,6 @@ var dashRoutes = [
         collapse: true, path: "/pages", name: "Pages", state: "openPages", icon: "pe-7s-gift", views:
             pages
     },
-    { redirect: true, path: "/", pathTo: "/dashboard", name: "Dashboard" }
+    { redirect: true, path: "/", pathTo: "/pages/login-page", name: "Dashboard" }
 ];
 export default dashRoutes;

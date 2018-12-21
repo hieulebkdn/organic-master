@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 // core components
 import Button from 'elements/CustomButton/CustomButton.jsx';
 
-import defaultImage from "../../assets/img/image_placeholder.jpg"
+import defaultImage from "assets/img/image_placeholder.jpg";
 import defaultAvatar from "assets/img/placeholder.jpg";
 
 class ImageUpload extends React.Component {

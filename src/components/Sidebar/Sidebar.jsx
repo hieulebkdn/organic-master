@@ -10,7 +10,7 @@ import HeaderLinks from 'components/Header/HeaderLinks.jsx';
 // backgroundImage for Sidebar
 import image from 'assets/img/full-screen-image-3.jpg';
 // image for avatar in Sidebar
-import avatar from 'assets/img/default-avatar.png';
+import avatar from 'assets/img/default-avatar.jpg';
 // logo for sidebar
 import logo from "logo.svg";
 
@@ -157,7 +157,7 @@ class Sidebar extends Component{
                                         </li>
                                     )
                                 } else {
-                                    if(prop.redirect){
+                                    if(prop.redirect || prop.hide){
                                         return null;
                                     }
                                     else{
