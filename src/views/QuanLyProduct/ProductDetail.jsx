@@ -2,20 +2,16 @@ import React, { Component } from 'react';
 
 import{
     Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl, HelpBlock, Form, InputGroup
+    FormGroup, ControlLabel, FormControl, Form
 } from 'react-bootstrap';
 import ReactLoading from 'react-loading';
 import Card from 'components/Card/Card.jsx';
 import ImageUpload from 'components/CustomUpload/ImageUpload.jsx';
 
-import Checkbox from 'elements/CustomCheckbox/CustomCheckbox.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
-import Radio from 'elements/CustomRadio/CustomRadio.jsx';
 import axios from 'axios';
 import Select from 'react-select';
-import{
-    selectOptions
-} from 'variables/Variables.jsx';
+
 
 class ProductDetail extends Component{
     constructor(props){

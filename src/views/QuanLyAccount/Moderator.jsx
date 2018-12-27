@@ -11,6 +11,7 @@ import Card from 'components/Card/Card.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 
 import callApi from '../../utils/apiCaller';
+import axios from 'axios'
 
 
 class Moderator extends Component {
@@ -74,14 +75,26 @@ class Moderator extends Component {
   }
   onDelete = (id) => {
     callApi('users/' + id, 'DELETE', null).then(res => {
-      callApi('moderators', 'GET', null).then(response => {
-        this.setState({ moderators: res.data });
+      const auth_token = localStorage.getItem('auth_token');
+      let url = "https://api-organic.herokuapp.com/v1/moderators ";
+      axios.get(url, {
+        headers: {
+          Authorization: 'Bearer ' + auth_token
+        }
+      }).then(response => {
+        this.setState({ moderators: response.data });
       })
     })
   }
 
   componentDidMount() {
-    callApi('moderators', 'GET', null).then(response => {
+    const auth_token = localStorage.getItem('auth_token');
+    let url = "https://api-organic.herokuapp.com/v1/moderators ";
+    axios.get(url, {
+      headers: {
+        Authorization: 'Bearer ' + auth_token
+      }
+    }).then(response => {
       this.setState({ moderators: response.data });
     })
   }
@@ -89,9 +102,6 @@ class Moderator extends Component {
   render() {
     const view = (
       <Tooltip id="view">View Profile</Tooltip>
-    );
-    const edit = (
-      <Tooltip id="edit">Edit Profile</Tooltip>
     );
     const remove = (
       <Tooltip id="remove">Remove</Tooltip>

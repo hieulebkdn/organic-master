@@ -3,7 +3,7 @@ import {
   Grid, Row, Col,
   Table,
   OverlayTrigger,
-  Tooltip, Modal, FormGroup, FormControl, Media, Checkbox, ControlLabel
+  Tooltip, Modal, FormGroup, FormControl, ControlLabel
 } from 'react-bootstrap';
 
 import Card from 'components/Card/Card.jsx';
@@ -84,9 +84,6 @@ class User extends Component {
   render() {
     const view = (
       <Tooltip id="view">View Profile</Tooltip>
-    );
-    const edit = (
-      <Tooltip id="edit">Edit Profile</Tooltip>
     );
     const remove = (
       <Tooltip id="remove">Remove</Tooltip>
