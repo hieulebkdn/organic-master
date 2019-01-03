@@ -25,6 +25,8 @@ import ProductAdd from 'views/QuanLyProduct/ProductAdd.jsx';
 
 import Moderator from 'views/QuanLyAccount/Moderator.jsx';
 import User from 'views/QuanLyAccount/User.jsx';
+import Orders from 'views/Orders.jsx'
+import OrderDetail from 'views/OrderDetail.jsx'
 
 import pagesRoutes from './pages.jsx';
 
@@ -40,6 +42,8 @@ var dashRoutes = [
     { path: "/add-product",hide:true, name: "New product", icon: "pe-7s-graph", component: ProductAdd },
     { path: "/product-detail/:id",hide:true, name: "ProductDetail", icon: "pe-7s-graph", component: ProductDetail },
     { path: "/manage-products", name: "Product", icon: "pe-7s-leaf", component: Product },
+    { path: "/manage-orders", name: "Order", icon: "pe-7s-leaf", component: Orders },
+
     {
         collapse: true, path: "/components", name: "Components", state: "openComponents", icon: "pe-7s-plugin", views: [
             { path: "/components/buttons", name: "Buttons", mini: "B", component: Buttons },

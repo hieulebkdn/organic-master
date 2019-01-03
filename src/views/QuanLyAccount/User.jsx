@@ -70,7 +70,7 @@ class User extends Component {
   onDelete = (id) => {
     callApi('users/' + id, 'DELETE', null).then(res => {
       callApi('normal-users', 'GET', null).then(response => {
-        this.setState({ users: res.data });
+        this.setState({ users: response.data });
       })
     })
   }
